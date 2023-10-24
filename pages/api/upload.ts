@@ -2,6 +2,7 @@ import multiparty from 'multiparty';
 import { NextApiRequest, NextApiResponse } from 'next';
 import path from 'path';
 import fs from 'fs';
+import mv from 'mv';
 
 interface UploadedFile {
   fieldName: string;
@@ -49,7 +50,9 @@ export default async function handler(
           projectTmpDir,
           uploadedFile.originalFilename,
         );
-        fs.renameSync(uploadedFile.path, newFilePath);
+
+        mv(uploadedFile.path, newFilePath,function(err) {});
+        // fs.renameSync(uploadedFile.path, newFilePath);
 
         uploadedFiles.push(newFilePath);
       } else {
